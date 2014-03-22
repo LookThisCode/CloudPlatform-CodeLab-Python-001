@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{% autoescape true %}
+<html>
+    
+    <body>
+		
+					<h2>Comments</h2>
+					  {% for c in comentarios %}
+      				   {% if c.autor %}
+      					 <p>{{ c.autor.nickname() }}</p> 
+     				   {% else %}
+       					anonimo 
+      				   {% endif %}
+      				  comentario: {{ c.contenido }}
+    				  {% endfor %}
+		
+	
+		
+		  	
+		   <!-- FORMS -->
+		    <form action="/comentarios?consulta_comentario={{ consulta_comentario }}" method="post">
+      			<div><textarea name="content" rows="3" cols="60"></textarea></div>
+     			<div><input type="submit" value="Comentar"></div>
+    		</form>
+
+		    <form>Alimentos:
+		      <input value="{{ consulta_comentario }}" name="consulta_comentario">
+		      <input type="submit" value="cambiar">
+		    </form>
+
+    		<a href="{{ url|safe }}">{{ url_linktext }}</a>
+    		
+    </body>
+</html>
+{% endautoescape %}

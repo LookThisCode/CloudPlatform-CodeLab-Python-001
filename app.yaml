@@ -1,0 +1,24 @@
+application: food
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /images
+  static_dir: static/images
+  
+- url: /stylesheets
+  static_dir: static/stylesheets
+  
+- url: /js
+  static_dir: static/js
+
+- url: /.*
+  script: foodcomments.application
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest

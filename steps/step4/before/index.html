@@ -1,0 +1,33 @@
+<<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <title>Plantillas Jinja</title>
+
+</head>
+  <body>
+
+    {% for c in comentarios %}
+      {% if c.autor %}
+      	{{ c.autor.nickname() }}: comento
+      {% else %}
+       anonimo 
+      {% endif %}
+      {{ c.contenido }}
+    {% endfor %}
+ 
+    <form action="/comentarios?consulta_comentario={{ consulta_comentario }}" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Comentar"></div>
+    </form>
+    <hr>
+
+    <form>Almacen Consultas:
+      <input value="{{ consulta_comentario }}" name="consulta_comentario">
+      <input type="submit" value="cambiar">
+    </form>
+
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
+
+  </body>
+</html>
+{% endautoescape %}

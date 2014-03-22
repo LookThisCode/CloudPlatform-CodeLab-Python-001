@@ -1,0 +1,50 @@
+<<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <title>Plantillas Jinja</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css">
+ 
+  <style>
+  #feedback { font-size: 1.4em; }
+  #selectable .ui-selecting { background: #FECA40; }
+  #selectable .ui-selected { background: #F39814; color: white; }
+  #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+  #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+  </style>
+  <script>
+  $(function() {
+    $( "#selectable" ).selectable();
+  });
+  </script>
+</head>
+  <body>
+  <ol id="selectable">
+    {% for c in comentarios %}
+    <li class="ui-widget-content">
+      {% if c.autor %}
+      	{{ c.autor.nickname() }}: comento
+      {% else %}
+       anonimo 
+      {% endif %}
+      {{ c.contenido }}</li>
+    {% endfor %}
+  </ol>
+    <form action="/comentarios?consulta_comentario={{ consulta_comentario }}" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Comentar"></div>
+    </form>
+    <hr>
+
+    <form>Almacen Consultas:
+      <input value="{{ consulta_comentario }}" name="consulta_comentario">
+      <input type="submit" value="cambiar">
+    </form>
+
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
+
+  </body>
+</html>
+{% endautoescape %}
