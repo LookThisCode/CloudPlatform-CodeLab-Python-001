@@ -32,18 +32,18 @@ class Home(webapp2.RequestHandler):
         consulta_comentarios = Comentario.query(ancestor=comentario_key(consulta_comentario)).order(-Comentario.fecha)
         comentarios = consulta_comentarios.fetch(10)
         
-        if users.get_current_user():
-            url = users.create_logout_url(self.request.uri)
-            url_linktext = 'Logout'
-        else:
-            url = users.create_login_url(self.request.uri)
-            url_linktext = 'Login'
+#        if users.get_current_user():
+#            url = users.create_logout_url(self.request.uri)
+#            url_linktext = 'Logout'
+#        else:
+#            url = users.create_login_url(self.request.uri)
+#            url_linktext = 'Login'
         
         valores_plantilla_alimentos = {
                                    'comentarios' : comentarios,
                                    'consulta_comentario' : urllib.quote_plus(consulta_comentario),
-                                   'url' : url, 
-                                   'url_linktext' : url_linktext,                            
+                                   'url' : "http://", #url, 
+                                   'url_linktext' : "links" #url_linktext,                            
         }
         
         plantilla = plantilla_alimentos.get_template('index.html')
@@ -55,11 +55,12 @@ class Comentarios(webapp2.RequestHandler):
         
             c = Comentario(parent=comentario_key(consulta_comentario))
         
-            if users.get_current_user():                
-                c.autor = users.get_current_user()       
+            user = users.User("test@example.com")
+            #if users.get_current_user():                
+            c.autor =  user #users.get_current_user()       
                                                         
-                c.contenido = self.request.get('content')   
-                c.put()                                     
+            c.contenido = self.request.get('content')   
+            c.put()                                     
         
             parametro_alimento = {'consulta_comentario': consulta_comentario}
             self.redirect('/?' + urllib.urlencode(parametro_alimento))
